@@ -8,10 +8,9 @@
 #include "MyHUD.h"
 #include "BoundaryWall.h"
 
-// Sets default values
+
 ASnakeBase::ASnakeBase()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	ElementSize = 100.f;
 	MovementSpeed = 10.f;
@@ -19,7 +18,6 @@ ASnakeBase::ASnakeBase()
 	bCanChangeDirection = true;
 }
 
-// Called when the game starts or when spawned
 void ASnakeBase::BeginPlay()
 {
 	Super::BeginPlay();
@@ -27,7 +25,6 @@ void ASnakeBase::BeginPlay()
 	AddSnakeElement(5);
 }
 
-// Called every frame
 void ASnakeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -66,7 +63,6 @@ void ASnakeBase::AddSnakeElement(int ElementsNum)
 		}
 		else
 		{
-			// Начальная позиция для первого элемента змейки
 			NewLocation = GetActorLocation();
 		}
 
@@ -114,7 +110,7 @@ void ASnakeBase::Move()
 	SnakeElements[0]->AddActorWorldOffset(MovementVector);
 	SnakeElements[0]->ToggleCollision();
 
-	// Разрешаем изменение направления после обновления позиции
+	
 	bCanChangeDirection = true;
 }
 
@@ -130,16 +126,13 @@ void ASnakeBase::SnakeElementOverlap(ASnakeElementBase* OverlappedElement, AActo
 		{
 			IInteractableInterface->Interact(this, bIsFirst);
 
-			// Проверяем, является ли объект едой
 			if (Other->IsA<AFood>())
 			{
-				// Генерируем случайное число от 0 до 1
 				float RandomValue = FMath::FRand();
-				// Если случайное число меньше или равно 0.5 (50% вероятность)
+				
 				if (RandomValue <= 0.5f)
 				{
-					// Увеличиваем скорость змейки в 2 раза
-					ChangeMovementSpeed(2.0f);
+					ChangeMovementSpeed(1.5f);
 				}
 			}
 		}
